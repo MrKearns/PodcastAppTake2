@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="160" id="iTi-OM-0E6" customClass="PodcastCell" customModule="PodcastAppTake2" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="627" height="183"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iTi-OM-0E6" id="iW3-9u-epD" customClass="UITableViewCellContentView">
+                <rect key="frame" x="0.0" y="0.0" width="627" height="183"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView autoresizesSubviews="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="recordingtape" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ywt-ST-Rkg">
+                        <rect key="frame" x="0.0" y="-110" width="627" height="464"/>
+                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="627" id="a02-r0-Pth"/>
+                            <constraint firstAttribute="height" constant="471.33333333333326" id="bSR-WK-tK5"/>
+                        </constraints>
+                    </imageView>
+                    <stackView autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" semanticContentAttribute="spatial" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-w4-iDk">
+                        <rect key="frame" x="118" y="9.9999999999999964" width="509" height="62.666666666666657"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0g-Uv-5Q3">
+                                <rect key="frame" x="0.0" y="0.0" width="509" height="20.333333333333332"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yN-WN-nF5">
+                                <rect key="frame" x="0.0" y="22.333333333333336" width="509" height="20.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7jT-YK-SIw">
+                                <rect key="frame" x="0.0" y="44.666666666666664" width="509" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Ywt-ST-Rkg" firstAttribute="centerX" secondItem="iW3-9u-epD" secondAttribute="centerX" id="6l4-Zs-EP0"/>
+                    <constraint firstAttribute="trailing" secondItem="5fx-w4-iDk" secondAttribute="trailing" id="DcF-9F-evC"/>
+                    <constraint firstItem="5fx-w4-iDk" firstAttribute="top" secondItem="iW3-9u-epD" secondAttribute="top" constant="10" id="IpV-xE-FsN"/>
+                    <constraint firstItem="5fx-w4-iDk" firstAttribute="leading" secondItem="Ywt-ST-Rkg" secondAttribute="trailing" constant="-509" id="RJB-hC-xca"/>
+                    <constraint firstItem="Ywt-ST-Rkg" firstAttribute="leading" secondItem="iW3-9u-epD" secondAttribute="leading" id="Wcv-6a-Mtx"/>
+                    <constraint firstItem="Ywt-ST-Rkg" firstAttribute="top" secondItem="iW3-9u-epD" secondAttribute="top" constant="-113.66666666666667" id="ee5-fg-hz7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="artistNameLabel" destination="7yN-WN-nF5" id="wti-PZ-oVO"/>
+                <outlet property="episodeCountLabel" destination="7jT-YK-SIw" id="9Yf-Qw-Cqo"/>
+                <outlet property="podcastImageView" destination="Ywt-ST-Rkg" id="tde-Ks-f4O"/>
+                <outlet property="trackNameLabel" destination="M0g-Uv-5Q3" id="Edt-NF-ovd"/>
+            </connections>
+            <point key="canvasLocation" x="362.59541984732823" y="-78.521126760563391"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="recordingtape" catalog="system" width="128" height="60"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
