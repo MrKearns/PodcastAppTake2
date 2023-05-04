@@ -79,7 +79,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2RK-Ow-Fcw">
                     <rect key="frame" x="24" y="50" width="327" height="704"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQM-Xk-6Wh" userLabel="Padding View">
+                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQM-Xk-6Wh" userLabel="Padding View">
                             <rect key="frame" x="0.0" y="0.0" width="327" height="25"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -98,7 +98,7 @@
                             <color key="textColor" red="0.88819173429999998" green="0.58240248510000003" blue="0.54614351269999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zly-9V-jL0" userLabel="Padding View">
+                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zly-9V-jL0" userLabel="Padding View">
                             <rect key="frame" x="0.0" y="69.666666666666671" width="327" height="25"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -113,32 +113,36 @@
                                 </imageView>
                                 <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Tau-bX-CiF" userLabel="Record Label">
                                     <rect key="frame" x="145" y="145.00000000000003" width="37" height="37"/>
+                                    <subviews>
+                                        <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="NZG-sx-GtN" userLabel="Record Hole">
+                                            <rect key="frame" x="9" y="11" width="19" height="18"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                </view>
-                                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="NZG-sx-GtN" userLabel="Record Hole">
-                                    <rect key="frame" x="139" y="139.00000000000003" width="49" height="49"/>
-                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="NZG-sx-GtN" firstAttribute="centerY" secondItem="Tau-bX-CiF" secondAttribute="centerY" constant="1.5" id="1gU-zY-GoN"/>
+                                        <constraint firstItem="NZG-sx-GtN" firstAttribute="leading" secondItem="Tau-bX-CiF" secondAttribute="trailing" constant="-28" id="2Mg-64-rYS"/>
+                                        <constraint firstItem="NZG-sx-GtN" firstAttribute="centerX" secondItem="Tau-bX-CiF" secondAttribute="centerX" id="LHf-V7-MkM"/>
+                                        <constraint firstItem="NZG-sx-GtN" firstAttribute="top" secondItem="Tau-bX-CiF" secondAttribute="bottom" constant="-26" id="Tzd-ZY-mq2"/>
+                                        <constraint firstItem="NZG-sx-GtN" firstAttribute="top" secondItem="Tau-bX-CiF" secondAttribute="bottom" constant="-26" id="a1C-dX-zMe"/>
+                                        <constraint firstItem="NZG-sx-GtN" firstAttribute="leading" secondItem="Tau-bX-CiF" secondAttribute="trailing" constant="-28" id="to7-k4-Qxg"/>
+                                    </constraints>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="trailingMargin" secondItem="6Zl-WX-LBE" secondAttribute="trailing" id="3ha-pB-n7N"/>
-                                <constraint firstItem="NZG-sx-GtN" firstAttribute="top" secondItem="Tau-bX-CiF" secondAttribute="bottom" constant="-43" id="4yA-1o-HWB"/>
-                                <constraint firstItem="NZG-sx-GtN" firstAttribute="top" secondItem="Tau-bX-CiF" secondAttribute="bottom" constant="-43" id="Dm5-mw-T9D"/>
                                 <constraint firstItem="Tau-bX-CiF" firstAttribute="centerX" secondItem="kBz-Ic-p2Y" secondAttribute="centerX" id="Hn6-PI-brJ"/>
-                                <constraint firstItem="NZG-sx-GtN" firstAttribute="centerX" secondItem="kBz-Ic-p2Y" secondAttribute="centerX" id="Muu-AU-91U"/>
-                                <constraint firstItem="NZG-sx-GtN" firstAttribute="leading" secondItem="Tau-bX-CiF" secondAttribute="trailing" constant="-43" id="Rw2-YC-e8I"/>
                                 <constraint firstAttribute="bottomMargin" secondItem="6Zl-WX-LBE" secondAttribute="bottom" id="TOz-hc-1Wa"/>
                                 <constraint firstItem="Tau-bX-CiF" firstAttribute="leading" secondItem="kBz-Ic-p2Y" secondAttribute="leading" constant="145" id="Uqc-s3-V33"/>
                                 <constraint firstItem="Tau-bX-CiF" firstAttribute="centerY" secondItem="kBz-Ic-p2Y" secondAttribute="centerY" id="WkX-At-QF2"/>
                                 <constraint firstAttribute="trailing" secondItem="Tau-bX-CiF" secondAttribute="trailing" constant="145" id="b0D-Bp-lFc"/>
                                 <constraint firstAttribute="bottom" secondItem="Tau-bX-CiF" secondAttribute="bottom" constant="145" id="g3v-F6-4aA"/>
                                 <constraint firstItem="Tau-bX-CiF" firstAttribute="top" secondItem="kBz-Ic-p2Y" secondAttribute="top" constant="145" id="j1h-4K-dYW"/>
-                                <constraint firstItem="NZG-sx-GtN" firstAttribute="leading" secondItem="Tau-bX-CiF" secondAttribute="trailing" constant="-43" id="jFB-9O-EAg"/>
                                 <constraint firstItem="6Zl-WX-LBE" firstAttribute="leading" secondItem="kBz-Ic-p2Y" secondAttribute="leadingMargin" id="ka4-Zi-4bH"/>
                                 <constraint firstItem="6Zl-WX-LBE" firstAttribute="top" secondItem="kBz-Ic-p2Y" secondAttribute="topMargin" id="kaF-IN-DGI"/>
                                 <constraint firstAttribute="width" secondItem="kBz-Ic-p2Y" secondAttribute="height" id="reP-Jy-4cH"/>
-                                <constraint firstItem="NZG-sx-GtN" firstAttribute="centerY" secondItem="kBz-Ic-p2Y" secondAttribute="centerY" id="vwt-YQ-qZI"/>
                             </constraints>
                         </view>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="KzF-2b-zmV">
@@ -207,7 +211,7 @@
                                 </button>
                             </subviews>
                         </stackView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zic-1m-F5H" userLabel="Speed Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1x" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zic-1m-F5H" userLabel="Speed Label">
                             <rect key="frame" x="0.0" y="661" width="327" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
@@ -216,19 +220,19 @@
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r16-nR-zBg">
                             <rect key="frame" x="0.0" y="679" width="327" height="25"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="NnD-pa-40c">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="NnD-pa-40c">
                                     <rect key="frame" x="0.0" y="2" width="34" height="21.333333333333332"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="34" id="cOP-Jc-1jO"/>
                                     </constraints>
                                 </imageView>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="zIZ-AM-nXw">
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="zIZ-AM-nXw">
                                     <rect key="frame" x="32" y="0.0" width="263" height="26"/>
                                     <connections>
                                         <action selector="volumeChangedSlider:" destination="CEH-G5-8dl" eventType="valueChanged" id="7a9-34-e3T"/>
                                     </connections>
                                 </slider>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker.wave.3.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1LP-9d-BFk">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker.wave.3.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1LP-9d-BFk">
                                     <rect key="frame" x="293" y="1" width="34" height="23"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="WMe-8f-3lh"/>
@@ -269,6 +273,8 @@
                 <outlet property="recordView" destination="kBz-Ic-p2Y" id="sE0-Hy-WjG"/>
                 <outlet property="skipBackButton" destination="HvV-RY-PhT" id="urQ-7h-fvR"/>
                 <outlet property="skipForwardButton" destination="iE4-BP-9PU" id="qGz-d2-joY"/>
+                <outlet property="speedLabel" destination="zic-1m-F5H" id="UJg-me-WQ8"/>
+                <outlet property="speedSlider" destination="zIZ-AM-nXw" id="dhR-88-IKg"/>
                 <outlet property="timeSlider" destination="KzF-2b-zmV" id="hvF-en-h28"/>
             </connections>
             <point key="canvasLocation" x="365.60000000000002" y="-122.66009852216749"/>

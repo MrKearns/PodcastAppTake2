@@ -18,11 +18,20 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
     let addButton = UIButton(type: .custom)
     let blurEffect = UIBlurEffect(style: .regular)
     
+    let almostInvisibleButton = UIButton()
+   
+
     
     
 // ---------- VIEW DID LOAD ----------
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        almostInvisibleButton.setTitle("Button", for: .normal)
+        almostInvisibleButton.backgroundColor = .gray
+
+        
         
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,12 +48,20 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
         view.addSubview(blurView)
         view.addSubview(pickerView)
         view.addSubview(addButton)
-        
+        view.addSubview(almostInvisibleButton)
+
+    
         
         pickerView.backgroundColor = .clear
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         pickerView.isUserInteractionEnabled = true
         blurView.alpha = 0.9
+        
+        almostInvisibleButton.alpha = 0.02
+        
+        
+        
+        
         
         // ---------- BOTTOM BUTTON SET UP ----------
         addButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
@@ -64,26 +81,46 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
         addButton.layer.shadowOpacity = 0.7
         addButton.layer.masksToBounds = false
         
+        almostInvisibleButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        almostInvisibleButton.addGestureRecognizer(longPressGesture)
+        
         
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
 //        tapGesture.delegate = self // Set the delegate of the gesture recognizer
 //        tapGesture.cancelsTouchesInView = false
 //        pickerView.addGestureRecognizer(tapGesture) // Add the gesture recognizer to the pickerView
         
+        
         // ----- CONSTRAINTS -----
+        
+        almostInvisibleButton.translatesAutoresizingMaskIntoConstraints = false
+        almostInvisibleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        almostInvisibleButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        almostInvisibleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        almostInvisibleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        almostInvisibleButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+
+
+
+        
         NSLayoutConstraint.activate(
             [backgroundImage.topAnchor.constraint(equalTo: view.topAnchor),
              backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor),
              backgroundImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
              backgroundImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+             
              blurView.topAnchor.constraint(equalTo: view.topAnchor),
              blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
              blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
              blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+             
              pickerView.topAnchor.constraint(equalTo: view.topAnchor),
              pickerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
              pickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: +2),
              pickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+             
+             
+             
              addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
              addButton.widthAnchor.constraint(equalToConstant: addButton.frame.size.width),

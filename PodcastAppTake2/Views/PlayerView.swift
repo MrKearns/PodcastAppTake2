@@ -10,12 +10,8 @@ import AVKit
 import MediaPlayer
 import ColorKit
 
-// ---------- COLOR KIT VARS ----------
-//var primaryColor: UIColor?
-//var secondaryColor: UIColor?
-//var tertiaryColor: UIColor?
-//var quarternaryColor: UIColor?
-//var averageColor: [UIColor]?
+var playbackRate: Float = 1.0
+var layerRotationSpeed: Float = 1.0
 
 
 // ---------- PLAYERVIEW CLASS ----------
@@ -23,7 +19,6 @@ class PlayerView: UIView {
     
     @IBOutlet weak var playPauseButton: UIButton!
 
-    
     var episode: Episode!{
         didSet{
             miniTitleLabel.text = episode.title
@@ -43,7 +38,6 @@ class PlayerView: UIView {
             recordView.layer.shadowRadius = 15
             
     
-            
             rotationInterval = 10
             nowPlayingLockScreen()
             setUpAudioSession()
@@ -62,25 +56,40 @@ class PlayerView: UIView {
             skipBackButton.tintColor = primaryColor
             skipForwardButton.tintColor = primaryColor
             
+            self.backgroundColor = secondaryColor
+            timeSlider.tintColor = primaryColor
+            
+            
+            // -- SLIDER BUSINESS --
+            speedSlider.setThumbImage(UIImage(systemName: "rectangle.portrait.fill"), for: .normal)
+            speedSlider.tintColor = primaryColor
+
+            let step: Float = 1
+            let numberOfSteps = (speedSlider.maximumValue - speedSlider.minimumValue) / step
+            speedSlider.maximumValue = numberOfSteps
+
+            for i in 0...Int(numberOfSteps) {
+                let tick = UIView(frame: CGRect(x: CGFloat(i) * speedSlider.frame.width / CGFloat(numberOfSteps), y: speedSlider.frame.height - 5, width: 1, height: 5))
+                tick.backgroundColor = UIColor.black
+                speedSlider.addSubview(tick)
+            }
+
+            speedSlider.value = 1
+            speedSlider.addTarget(self, action: #selector(volumeChangedSlider(_:)), for: .valueChanged)
+
+            
             
             // LOCKSCREEN IMAGE SETUP
             miniImageView.sd_setImage(with: url) { (image, _, _, _) in
                 let image = self.episodeImage.image ?? UIImage()
-                //var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
                 let artwork = MPMediaItemArtwork(boundsSize: .zero, requestHandler: { (size) -> UIImage in
                     return image
                 })
-                //nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
                 
                 MPNowPlayingInfoCenter.default().nowPlayingInfo? [MPMediaItemPropertyArtwork] = artwork
             }
-            
-
-            //playPauseButton.titleLabel?.adjustsFontSizeToFitWidth = true
         }
     }
-    
-    
     
     
     // ---------- LOCKSCREEN INFO ----------
@@ -107,6 +116,7 @@ class PlayerView: UIView {
             
             let playerItem = AVPlayerItem(url: trueLocation)
             player.replaceCurrentItem(with: playerItem)
+            player.rate = playbackRate
             player.play()
     
         } else {
@@ -115,17 +125,15 @@ class PlayerView: UIView {
             guard let url = URL(string: episode.streamURL!) else {return}
             let playerItem = AVPlayerItem(url: url)
             player.replaceCurrentItem(with: playerItem)
+            player.rate = playbackRate
             player.play()
         }
-        
         
         DispatchQueue.main.async {
             self.episodeImage.resumeAnimation()
             self.episodeImage.rotate360()
             self.episodeImage.setNeedsDisplay()
         }
-        
-        
         
     }
     
@@ -150,20 +158,6 @@ class PlayerView: UIView {
             self?.updateCurrentTimeSlider()
         }
     }
-    
-    // -------- CURRENT TIME LOCKSCREEN --------
-//    func lockScreenCurrentTime() {
-//
-//        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
-//        guard let currentItem = player.currentItem else {return}
-//        let durationInSeconds = CMTimeGetSeconds(currentItem.duration)
-//        //player.currentItem?.duration
-//
-//        let elapsedTime = CMTimeGetSeconds(player.currentTime())
-//        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
-//        nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
-//        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-//    }
     
     
     // INIT FROM NIB
@@ -355,14 +349,13 @@ class PlayerView: UIView {
             
             if options == AVAudioSession.InterruptionOptions.shouldResume{
                 player.play()
+                episodeImage.resumeAnimation()
                 playPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
                 miniPlayPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
             }
             
-            
         }
-        
-        //AVAudioSession.InterruptionType.began
+
     }
     
     
@@ -386,8 +379,7 @@ class PlayerView: UIView {
             self?.lockscreenDuration()
             
             // add start rotation function
-            //self?.stopRotation()
-            //self?.episodeImage.rotate360()
+        
         }
     }
     
@@ -409,7 +401,8 @@ class PlayerView: UIView {
         }
     }
     
-    // ---- PAN GESTURE FUNCS ----
+    
+    // ----------- PAN GESTURE FUNCS -----------
     
     
     // PAN CHANGE
@@ -468,39 +461,8 @@ class PlayerView: UIView {
                 rootViewController.minimizePlayer()
             }
         }
-        
-//        let mainTabBarController = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController as? MainTabBarController
-//
-//        let this = UIApplication.shared.windows.first as?
-        
-        
-//
-//        let mainTabController = MainTabBarController()
-//        self.window?.rootViewController = mainTabController
-//        mainTabController.minimizePlayer()
-        
-
-        
-//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//           let sceneDelegate = windowScene.delegate as? SceneDelegate,
-//           let window = sceneDelegate.window {
-//            window.rootViewController = MainTabBarController
-//
-//        }
-      
-    
-        //self.removeFromSuperview()
     }
     
-//    @IBOutlet weak var playPauseButton: UIButton! {
-//        didSet{
-//            playPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
-//        }
-//    }
-//
-//    @objc func handlePlayPause() {
-//
-//    }
     
     
     // ---------- PLAY PAUSE BUTTON ----------
@@ -509,7 +471,10 @@ class PlayerView: UIView {
         if player.timeControlStatus == .paused{
             playPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
             miniPlayPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+            
             player.play()
+            player.rate = playbackRate
+            episodeImage.layer.speed = layerRotationSpeed
             self.elapsedTime(playbackRate: 1)
             
             // add rotation function
@@ -534,32 +499,43 @@ class PlayerView: UIView {
     }
     
     
-    
-    @IBOutlet weak var episodeImage: UIImageView!{
-        didSet{
-            //episodeImage.backgroundColor = primaryColor
-            //recordLabel.backgroundColor = quarternaryColor
-            
-            //episodeImage.layer.cornerRadius = self.episodeImage.frame.height / 2
-//
-//
-//            episodeImage.layer.shadowColor = UIColor.black.cgColor
-//            episodeImage.layer.shadowOpacity = 0.9
-//            episodeImage.layer.shadowOffset = CGSizeMake(0, 10)
-//            episodeImage.layer.shadowRadius = 20
-     
-            //episodeImage.layer.shouldRasterize = true
-          
-            
-            //recordHole.layer.cornerRadius = self.recordHole.frame.height / 2
-            //recordLabel.layer.cornerRadius = self.recordLabel.frame.height / 2
-
-        }
-    }
-    
-    // -------- IBA ACTIONS --------
+    // -------------- IBA ACTIONS --------------
     @IBAction func volumeChangedSlider(_ sender: UISlider) {
-        player.volume = sender.value
+        //player.volume = sender.value
+        let currentValue = speedSlider.value
+        let roundedValie = currentValue.rounded()
+        speedSlider.setValue(roundedValie, animated: false)
+        
+        switch (speedSlider.value){
+        case 0: speedLabel.text = ".5x"
+            playbackRate = 0.5
+            player.rate = 0.5
+            episodeImage.layer.speed = 0.5
+            layerRotationSpeed = 0.5
+        case 1: speedLabel.text = "1x"
+            player.rate = 1
+            episodeImage.layer.speed = 1
+            layerRotationSpeed = 1
+        case 2: speedLabel.text = "1.25x"
+            playbackRate = 1.25
+            player.rate = 1.25
+            episodeImage.layer.speed = 1.25
+            layerRotationSpeed = 1.25
+        case 3: speedLabel.text = "1.5x"
+            playbackRate = 1.5
+            player.rate = 1.5
+            episodeImage.layer.speed = 1.5
+            layerRotationSpeed = 1.5
+        case 4: speedLabel.text = "2x"
+            player.rate = 2
+            playbackRate = 2
+            episodeImage.layer.speed = 2
+            layerRotationSpeed = 2
+        default:speedLabel.text = "1x"
+            player.rate = 1
+            episodeImage.layer.speed = 1
+            layerRotationSpeed = 1
+        }
     }
     
     // SLIDER TIME CHANGE
@@ -567,7 +543,7 @@ class PlayerView: UIView {
         let percent = timeSlider.value
         guard let duration = player.currentItem?.duration else {return}
         let durationInSeconds = CMTimeGetSeconds(duration)
-        let seekTimeInSeconds = Float64(percent) * durationInSeconds
+        let seekTimeInSeconds = (Float64(percent) * durationInSeconds).rounded()
         let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, preferredTimescale: 1)
         MPNowPlayingInfoCenter.default().nowPlayingInfo? [MPNowPlayingInfoPropertyElapsedPlaybackTime] = seekTimeInSeconds
         player.seek(to: seekTime)
@@ -595,45 +571,46 @@ class PlayerView: UIView {
     
     
     // ----- OUTLET VARIABLES -----
-    @IBOutlet weak var timeSlider: UISlider!
+    
+    
+    @IBOutlet weak var episodeImage: UIImageView!
+    @IBOutlet weak var timeSlider: UISlider!{
+        didSet{
+            //let thumbSize = CGSize(width: 20, height: 20)
+            let thumbImage = UIImage(systemName: "line.3.horizontal.circle.fill")?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+            timeSlider.setThumbImage(thumbImage, for: .normal)
+            //timeSlider.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            
+        }
+    }
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
     @IBOutlet weak var skipBackButton: UIButton!
     @IBOutlet weak var skipForwardButton: UIButton!
+    @IBOutlet weak var speedLabel: UILabel!
+    
+    @IBOutlet weak var speedSlider: UISlider!
     @IBOutlet weak var episodeTitle: UILabel!{
         didSet{
             episodeTitle.numberOfLines = 2
         }
     }
     
-   
-    
-    
     // -- RECORD VIEW --
     @IBOutlet weak var recordView: UIView! {
         didSet{
-            
-//            recordView.clipsToBounds = true
-//            recordView.contentMode = .scaleAspectFill
-//            recordView.layer.shadowColor = UIColor.black.cgColor
-//            recordView.layer.shadowOpacity = 0.9
-//            recordView.layer.shadowOffset = CGSizeMake(0, 8)
-//            recordView.layer.shadowRadius = 15
-//            episodeImage.layer.shouldRasterize = true
             recordView.backgroundColor = .clear
         }
     }
     
     @IBOutlet weak var recordLabel: UIView!
     @IBOutlet weak var recordHole: UIView!
-    
     @IBOutlet weak var FullScreenPlayerView: UIStackView!
     
     // -- MINI PLAYER OUTLETS --
     
     @IBOutlet weak var miniPlayerView: UIView!
-    
     @IBOutlet weak var miniTitleLabel: UILabel!
     @IBOutlet weak var miniImageView: UIImageView!
     
