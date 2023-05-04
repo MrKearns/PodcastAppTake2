@@ -38,6 +38,7 @@ class EpisodeCellTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var episodeImage: UIImageView!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var progressLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

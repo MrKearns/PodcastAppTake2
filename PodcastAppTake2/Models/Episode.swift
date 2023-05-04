@@ -8,7 +8,7 @@
 import Foundation
 import FeedKit
 
-struct Episode {
+struct Episode: Codable {
     let title: String
     let pubDate: Date
     let description: String
@@ -17,12 +17,20 @@ struct Episode {
     let author: String?
     let streamURL: String?
     
+    var fileUrl: String?
+    
+    
     init(feedItem: RSSFeedItem){
+        
+        let description = feedItem.description
+        let strippedDescription = description?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+            .replacingOccurrences(of: "\\s", with: " ", options: .regularExpression, range: nil)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         
         self.streamURL = feedItem.enclosure?.attributes?.url ?? ""
         self.title = feedItem.title ?? ""
         self.pubDate = feedItem.pubDate ?? Date()
-        self.description = feedItem.iTunes?.iTunesSubtitle ?? feedItem.description ?? ""
+        self.description = strippedDescription ?? feedItem.iTunes?.iTunesSubtitle ?? ""
         self.duration = feedItem.iTunes?.iTunesDuration ?? Double()
         self.imageUrl = feedItem.iTunes?.iTunesImage?.attributes?.href
         self.author = feedItem.iTunes?.iTunesAuthor ?? ""

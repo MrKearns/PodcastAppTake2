@@ -57,13 +57,19 @@ class PodcastSearchControllers : UITableViewController, UISearchBarDelegate {
     
     // --------------- SEARCH BAR TEXT MONITORING & iTunes API SEARCH FUNC -----------
     
+    var timer: Timer?
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        APIService.shared.fetchPodcast(searchText: searchText) { (podcasts) in
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: {(timer) in
+            APIService.shared.fetchPodcast(searchText: searchText) { (podcasts) in
+                
+                self.podcast = podcasts
+                self.tableView.reloadData()
+            }
             
-            self.podcast = podcasts
-            self.tableView.reloadData()
-        }
+        })
+        
+        
     }
     
     
@@ -118,9 +124,10 @@ class PodcastSearchControllers : UITableViewController, UISearchBarDelegate {
         return cell
     }
     
+    
     // tableview - cell height
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        150
+        125
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
