@@ -25,6 +25,12 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
     
 // ---------- VIEW DID LOAD ----------
     override func viewDidLoad() {
+        
+       
+        
+        //disableButtons()
+        
+      
         super.viewDidLoad()
         
 
@@ -57,9 +63,8 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
         pickerView.isUserInteractionEnabled = true
         blurView.alpha = 0.9
         
-        almostInvisibleButton.alpha = 0.02
         
-        
+    
         
         
         
@@ -139,6 +144,7 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
         guard let mainTabBarController = app.mainTabBarController() else {
             return
         }
+        disableButtons()
         mainTabBarController.viewControllers?[1].tabBarItem.badgeValue = nil
         //UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = nil
     }
@@ -157,14 +163,22 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("row selected \(row)")
         //let pickerIndex = pickerView.selectedRow(inComponent: 0)
-        let selectedPodcast = podcasts[row]
-        let url = URL(string: podcasts[row].artworkUrl600 ?? "")
+        if podcasts.count != 0{
+            let selectedPodcast = podcasts[row]
+            let url = URL(string: podcasts[row].artworkUrl600 ?? "")
+            backgroundImage.sd_setImage(with: url)
+            addButton.setTitle("\(selectedPodcast.trackCount ?? 0)", for: .normal)
+            self.pickerView.reloadAllComponents()
+        } else {
+            return
+        }
+        
         //pickerView.backgroundColor = colors.randomElement()
 
-        backgroundImage.sd_setImage(with: url)
+        
         //backgroundImage = UIImageView(frame: pickerView.bounds)
         
-        addButton.setTitle("\(selectedPodcast.trackCount ?? 0)", for: .normal)
+       
        
         //backgroundImage.backgroundColor = .red
         
@@ -193,6 +207,14 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
         return view
         //return pickerLabel!
     }
+    
+    // ---------- VIEW DID APPESR ----------
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.disableButtons()
+//
+//    }
+    
     
 //    // Implement UIGestureRecognizerDelegate method to allow the tap gesture recognizer to work simultaneously with the UIPickerView's built-in gesture recognizers
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -236,6 +258,8 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
             
             UserDefaults.standard.deletePodcast(podcast: selectedPodcast)
             self.pickerView.reloadAllComponents()
+            self.disableButtons()
+            
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -248,5 +272,16 @@ class SubscriptionsController: UIViewController, UIPickerViewDataSource, UIPicke
             print("You Ended Long Press on \(podcasts[pickerIndex].trackName ?? "unknown label")")
         }
     }
+    
+    func disableButtons(){
+        if podcasts.isEmpty{
+            almostInvisibleButton.alpha = 0
+            addButton.alpha = 0
+        } else {
+            almostInvisibleButton.alpha = 0.02
+            addButton.alpha = 1
+        }
+    }
+    
 }
 

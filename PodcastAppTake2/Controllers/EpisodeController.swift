@@ -7,6 +7,8 @@
 
 import UIKit
 import FeedKit
+import SDWebImage
+
 
 
 class EpisodeController: UITableViewController{
@@ -121,6 +123,7 @@ class EpisodeController: UITableViewController{
     
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: starFill, style: .plain, target: nil, action: nil)
         
+        SubscriptionsController().disableButtons()
     }
     
     
@@ -196,6 +199,7 @@ class EpisodeController: UITableViewController{
                 rootViewController.maxamizePlayer(episode: episode, playlistEpisodes: self.episodes)
             }
         }
+        
         
 
         
